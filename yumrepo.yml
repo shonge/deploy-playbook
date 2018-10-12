@@ -1,0 +1,8 @@
+---
+- hosts: all
+  tasks:
+  - name: generation yumrepo
+    template:
+      src: templates/harbor.repo.j2
+      dest: /etc/yum.repos.d/harbor.repo
+

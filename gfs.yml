@@ -1,0 +1,7 @@
+---
+- hosts: glusterfs
+  tasks: 
+  - name: Install GlusterFS
+    yum: 
+      name: glusterfs-server
+      state: present
