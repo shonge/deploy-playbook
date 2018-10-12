@@ -1,7 +1,5 @@
 ---
 - hosts: glusterfs
-#  vars:
-#    path: /data/glusterfs/gv0
   tasks: 
   - name: make gfs dir
     file:
