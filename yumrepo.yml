@@ -6,3 +6,18 @@
       src: templates/harbor.repo.j2
       dest: /etc/yum.repos.d/harbor.repo
 
+  - name: disabled selinux
+    selinux:
+      state: disabled
+
+  - name: start firewalld
+    systemd:
+      name: firewalld
+      enabled: true
+      state: started
+
+  - name: config firewalld
+    shell: |
+      firewall-cmd --set-default-zone=trusted
+      firewall-cmd --complete-reload
+
