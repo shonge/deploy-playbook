@@ -1,7 +1,7 @@
 ---
 - hosts: glusterfs
-  vars:
-    path: /data/glusterfs/gv0
+#  vars:
+#    path: /data/glusterfs/gv0
   tasks: 
   - name: make gfs dir
     file:
@@ -9,7 +9,7 @@
       state: directory
       mode: 0755
     with_items:
-      - '{{ path }}'
+      - '{{ brick_dir }}'
 
   - name: install GlusterFS
     yum: 
@@ -26,11 +26,8 @@
     gluster_volume:
       state: present
       name: gv0
-      bricks: /data/glusterfs/gv0
+      bricks: "{{ brick_dir }}"
       rebalance: yes
-      cluster:
-        - 192.168.92.138
-        - 192.168.92.143
-        - 192.168.92.144
+      cluster: "{{ groups.glusterfs | join(',') }}"
       force: yes
     run_once: true
