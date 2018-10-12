@@ -22,3 +22,15 @@
       state: started
       enabled: yes
 
+  - name: create gluster volume
+    gluster_volume:
+      state: present
+      name: gv0
+      bricks: /data/glusterfs/gv0
+      rebalance: yes
+      cluster:
+        - 192.168.92.138
+        - 192.168.92.143
+        - 192.168.92.144
+      force: yes
+    run_once: true
