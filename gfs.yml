@@ -29,3 +29,15 @@
       cluster: "{{ groups.glusterfs | join(',') }}"
       force: yes
     run_once: true
+
+  - name: install keepalived
+    yum:
+      name: keepalived
+      state: present
+
+  - name: enable keepalived
+    systemd:
+      name: keepalived
+      state: started
+      enabled: yes
+

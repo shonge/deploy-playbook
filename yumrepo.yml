@@ -1,10 +1,22 @@
 ---
 - hosts: all
   tasks:
+  - name: Remove repository (and clean up left-over metadata)
+    file:
+      path: "{{ item }}"
+      state: absent
+    with_fileglob:
+      - "/etc/yum.repos.d/*"
+
   - name: generation yumrepo
     template:
       src: templates/harbor.repo.j2
       dest: /etc/yum.repos.d/harbor.repo
+
+  - name: make yum cache
+    shell: |
+     yum clean all
+     yum makecache
 
   - name: disabled selinux
     selinux:
