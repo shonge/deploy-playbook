@@ -26,5 +26,21 @@
       mysql -uroot -p"$init_password" --connect-expired-password --execute="ALTER USER 'root'@'localhost' IDENTIFIED BY '{{ pxc_password }}'"
     register: shell_result
 
+  - name: add sst user
+    shell: |
+      mysql -uroot -p{{ pxc_password }} --execute="CREATE USER 'sstuser'@'localhost' IDENTIFIED BY '{{ sst_password }}';GRANT RELOAD, LOCK TABLES, PROCESS, REPLICATION CLIENT ON *.* TO 'sstuser'@'localhost';"
+
+  - name: stop PXC
+    systemd:
+      name: mysql
+      state: stopped
+
+  - name: generation my.cnf
+    template:
+      src: templates/my.cnf.j2
+      dest: /root/my.cnf
+    tags:
+      - config_pxc
+
   - debug:
       var: shell_result.stdout_lines

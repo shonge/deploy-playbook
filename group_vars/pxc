@@ -1,2 +1,3 @@
 pxc_dir: /data/pxc
 pxc_password: abc@12345
+sst_password: sst@12345
