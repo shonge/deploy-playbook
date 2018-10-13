@@ -51,7 +51,7 @@
     tags:
       - config_wsrep
 
-  - name: bootstrap-pxc First Node
+  - name: bootstrap-pxc Node
     shell: |
       {% for host in ansible_play_batch -%}
         {% if host == inventory_hostname -%}
@@ -65,5 +65,24 @@
     tags:
       - bootpxc
 
+  - name: install keepalived
+    yum:
+      name: keepalived
+      state: present
+
+  - name: config keepalived
+    template:
+      src: templates/keepalived.conf.j2
+      dest: /etc/keepalived/keepalived.conf
+
+  - name: enable keepalived
+    systemd:
+      name: keepalived
+      state: started
+      enabled: yes
+
+
   - debug:
       var: shell_result.stdout_lines
+
+

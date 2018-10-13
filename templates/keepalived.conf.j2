@@ -5,7 +5,15 @@ global_defs {
 }
 
 vrrp_instance VI_1 {
-    state {{ keepalived_role }}
+  {% for host in ansible_play_batch -%}
+    {% if host == inventory_hostname -%}
+      {% if loop.index == 1 -%}
+        state MASTER
+      {% else -%}
+        state BACKUP
+      {% endif -%}
+    {% endif -%}
+  {% endfor -%}
     interface {{ keepalived_interface  }}
     virtual_router_id {{ keepalived_vrid  }}
     priority 100
