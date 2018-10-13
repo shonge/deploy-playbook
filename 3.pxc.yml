@@ -31,6 +31,7 @@
     shell: |
       init_password=`grep 'temporary password' /var/log/mysqld.log | awk '{print $NF}'`
       mysql -uroot -p"$init_password" --connect-expired-password --execute="ALTER USER 'root'@'localhost' IDENTIFIED BY '{{ pxc_password }}'"
+      mysql -uroot -p{{ pxc_password }} --execute="grant all privileges on *.* to root@'%' IDENTIFIED BY '{{ pxc_password }}'"
     register: shell_result
 
   - name: add sst user

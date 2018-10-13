@@ -1,12 +1,13 @@
 ---
 - hosts: harbor
   vars:
-  - cpath: /data/
+  - cpath: /data
   - version: v1.5.3
+  - hapath: /data/harborHA 
   tasks: 
   - name: Ensure Gluster volume is mounted.
     mount:
-      path: /data/harborHA
+      path: "{{ hapath }}"
       src: "{{ gfs_ip }}:/gv0"
       fstype: glusterfs
       opts: "defaults,_netdev"
@@ -18,7 +19,6 @@
     unarchive:
       src: files/harbor-offline-installer-{{ version }}.tgz
       dest: '{{ cpath }}'
-    when: inventory_hostname == ansible_play_batch[0]
     tags: 
       - scp
 
@@ -36,3 +36,16 @@
       mysql -uroot -p'{{ pxc_password }}' < {{ cpath }}/registry.sql
       mysql -uroot -p'{{ pxc_password }}' -e "set global pxc_strict_mode=ENFORCING;"
     when: inventory_hostname == ansible_play_batch[0]
+
+  - name: generation config
+    template:
+      src: '{{ item.src }}'
+      dest: '{{ item.dest }}'
+    with_items:
+    - { src: 'templates/harbor.cfg.j2', dest: '{{ cpath }}/harbor/harbor.cfg' }
+    - { src: 'templates/docker-compose.yml.j2', dest: '{{ cpath }}/harbor/docker-compose.yml' }
+
+  - name: launch registry
+    shell: ./install.sh
+    args:
+      chdir: '{{ cpath }}/harbor'
