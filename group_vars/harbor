@@ -1,5 +1,6 @@
-gfs_ip: 
-pxc_ip: 
+gfs_ip: 192.168.92.144
+pxc_ip: 192.168.92.144
+registry: 192.168.92.142
 pxc_password: abc@12345
 harbor_password: Harbor12345
 keepalived_rid: 12
