@@ -35,6 +35,11 @@
       name: keepalived
       state: present
 
+  - name: config keepalived
+    template:
+      src: templates/keepalived.conf.j2
+      dest: /etc/keepalived/keepalived.conf
+
   - name: enable keepalived
     systemd:
       name: keepalived

@@ -1,0 +1,20 @@
+! Configuration File for keepalived
+
+global_defs {
+   router_id {{ keepalived_rid  }}
+}
+
+vrrp_instance VI_1 {
+    state {{ keepalived_role }}
+    interface {{ keepalived_interface  }}
+    virtual_router_id {{ keepalived_vrid  }}
+    priority 100
+    advert_int 1
+    authentication {
+        auth_type PASS
+        auth_pass 125
+    }
+    virtual_ipaddress {
+        {{ keepalived_vip }}
+    }
+}
