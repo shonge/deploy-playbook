@@ -58,7 +58,7 @@
           {% if loop.index == 1 -%}
             systemctl start mysql@bootstrap.service
           {% else -%}
-            /etc/init.d/mysql start
+            service mysql start
           {% endif -%}
         {% endif -%}
       {% endfor -%}
