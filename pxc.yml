@@ -40,7 +40,7 @@
   - name: generation my.cnf
     template:
       src: templates/my.cnf.j2
-      dest: /root/my.cnf
+      dest: /etc/my.cnf
     tags:
       - config_pxc
 

@@ -1,10 +1,9 @@
 [client]
-socket=/var/lib/mysql/mysql.sock
+socket={{ pxc_dir }}/mysql/mysql.sock
 
 [mysqld]
-server-id=1
-datadir=/data/pxc/mysql
-socket=/data/pxc/mysql/mysql.sock
+datadir={{ pxc_dir }}/mysql
+socket={{ pxc_dir }}/mysql/mysql.sock
 log-error=/var/log/mysqld.log
 pid-file=/var/run/mysqld/mysqld.pid
 log-bin
@@ -22,6 +21,7 @@ wsrep_cluster_address=gcomm://{{ groups.pxc | join(',') }}
 
 {% for host in ansible_play_batch -%}
 {% if host == inventory_hostname -%}
+server-id={{ loop.index  }}
 wsrep_node_name=pxc{{ loop.index  }}
 {% endif -%}
 {% endfor -%}
@@ -40,6 +40,6 @@ innodb_autoinc_lock_mode=2
 
 [mysqld_safe]
 pid-file = /var/run/mysqld/mysqld.pid
-socket   = /data/pxc/mysql/mysql.sock
+socket   = {{ pxc_dir }}/mysql/mysql.sock
 nice     = 0
 
