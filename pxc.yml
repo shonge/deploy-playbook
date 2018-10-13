@@ -29,6 +29,8 @@
   - name: add sst user
     shell: |
       mysql -uroot -p{{ pxc_password }} --execute="CREATE USER 'sstuser'@'localhost' IDENTIFIED BY '{{ sst_password }}';GRANT RELOAD, LOCK TABLES, PROCESS, REPLICATION CLIENT ON *.* TO 'sstuser'@'localhost';"
+    tags:
+      - add_sst
 
   - name: stop PXC
     systemd:
