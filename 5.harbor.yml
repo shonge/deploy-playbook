@@ -1,0 +1,16 @@
+---
+- hosts: harbor
+  vars:
+  - cpath: /data/
+  - version: v1.5.3
+  tasks: 
+  - name: unarchive harbor
+    unarchive:
+      src: files/harbor-offline-installer-{{ version }}.tgz
+      dest: '{{ cpath }}'
+  - name: load data
+    shell: |
+      mysql -uroot -p'{{ pxc_password }}' -e "set global pxc_strict_mode=PERMISSIVE;"
+      mysql -uroot -p'{{ pxc_password }}' < /root/registry.sql
+      mysql -uroot -p'{{ pxc_password }}' -e "set global pxc_strict_mode=ENFORCING;"
+    when: inventory_hostname == harbor[0]
