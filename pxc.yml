@@ -20,4 +20,11 @@
       state: started
       enabled: yes
 
+  - name: change password
+    shell: |
+      init_password=`grep 'temporary password' /var/log/mysqld.log | awk '{print $NF}'`
+      mysql -uroot -p"$init_password" --connect-expired-password --execute="ALTER USER 'root'@'localhost' IDENTIFIED BY '{{ pxc_password }}'"
+    register: shell_result
 
+  - debug:
+      var: shell_result.stdout_lines
