@@ -69,18 +69,23 @@
     yum:
       name: keepalived
       state: present
+    tags:
+      - keepalived
 
   - name: config keepalived
     template:
       src: templates/keepalived.conf.j2
       dest: /etc/keepalived/keepalived.conf
+    tags:
+      - keepalived
 
   - name: enable keepalived
     systemd:
       name: keepalived
       state: started
       enabled: yes
-
+    tags:
+      - keepalived
 
   - debug:
       var: shell_result.stdout_lines
