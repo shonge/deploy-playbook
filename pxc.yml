@@ -49,7 +49,21 @@
       src: templates/wsrep.cnf.j2
       dest: /etc/wsrep.cnf
     tags:
-      - config_mysql
+      - config_wsrep
+
+  - name: bootstrap-pxc First Node
+    shell: |
+      {% for host in ansible_play_batch -%}
+        {% if host == inventory_hostname -%}
+          {% if loop.index == 1 -%}
+            systemctl start mysql@bootstrap.service
+          {% else -%}
+            /etc/init.d/mysql start
+          {% endif -%}
+        {% endif -%}
+      {% endfor -%}
+    tags:
+      - bootpxc
 
   - debug:
       var: shell_result.stdout_lines

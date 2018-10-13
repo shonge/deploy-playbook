@@ -6,6 +6,7 @@
       name: mysql
       state: stopped
       enabled: no
+    ignore_errors: yes
 
   - name: remove PXC
     yum: 

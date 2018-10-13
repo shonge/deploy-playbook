@@ -23,7 +23,7 @@ binlog_format=ROW
 default_storage_engine=InnoDB
 innodb_autoinc_lock_mode=2
 
-!include wsrep.cnf
+!include /etc/wsrep.cnf
 
 [mysqld_safe]
 pid-file = {{ pxc_dir }}/mysqld/mysqld.pid
