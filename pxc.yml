@@ -1,0 +1,23 @@
+---
+- hosts: pxc
+  tasks: 
+  - name: make pxc dir
+    file:
+      path: '{{ item }}'
+      state: directory
+      mode: 0755
+    with_items:
+      - '{{ pxc_dir }}'
+
+  - name: install PXC
+    yum: 
+      name: Percona-XtraDB-Cluster-57
+      state: present
+
+  - name: enable PXC
+    systemd:
+      name: mysql
+      state: started
+      enabled: yes
+
+

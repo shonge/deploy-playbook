@@ -7,7 +7,10 @@
 192.168.92.144 keepalived_role="BACKUP"
 
 [pxc]
-192.168.92.138
+192.168.92.138 keepalived_role="MASTER"
+192.168.92.143 keepalived_role="BACKUP"
+192.168.92.144 keepalived_role="BACKUP"
+
 
 [harbor]
 192.168.92.138
