@@ -14,6 +14,13 @@
       name: Percona-XtraDB-Cluster-57
       state: present
 
+  - name: generation my.cnf
+    template:
+      src: templates/my.cnf.j2
+      dest: /etc/my.cnf
+    tags:
+      - config_mysql
+
   - name: enable PXC
     systemd:
       name: mysql
@@ -37,12 +44,12 @@
       name: mysql
       state: stopped
 
-  - name: generation my.cnf
+  - name: generation wsrep.cnf
     template:
-      src: templates/my.cnf.j2
-      dest: /etc/my.cnf
+      src: templates/wsrep.cnf.j2
+      dest: /etc/wsrep.cnf
     tags:
-      - config_pxc
+      - config_mysql
 
   - debug:
       var: shell_result.stdout_lines

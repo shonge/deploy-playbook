@@ -5,7 +5,7 @@ socket={{ pxc_dir }}/mysql/mysql.sock
 datadir={{ pxc_dir }}/mysql
 socket={{ pxc_dir }}/mysql/mysql.sock
 log-error=/var/log/mysqld.log
-pid-file=/var/run/mysqld/mysqld.pid
+pid-file={{ pxc_dir }}/mysqld/mysqld.pid
 log-bin
 log_slave_updates
 expire_logs_days=7
@@ -13,33 +13,20 @@ expire_logs_days=7
 # Disabling symbolic-links is recommended to prevent assorted security risks
 symbolic-links=0
 
-# PXC
-wsrep_provider=/usr/lib64/galera3/libgalera_smm.so
-
-wsrep_cluster_name=pxc-cluster
-wsrep_cluster_address=gcomm://{{ groups.pxc | join(',') }}
-
 {% for host in ansible_play_batch -%}
 {% if host == inventory_hostname -%}
 server-id={{ loop.index  }}
-wsrep_node_name=pxc{{ loop.index  }}
 {% endif -%}
 {% endfor -%}
-
-wsrep_node_address={{ inventory_hostname }}
-
-wsrep_sst_method=xtrabackup-v2
-wsrep_sst_auth=sstuser:{{ sst_password }}
-
-pxc_strict_mode=ENFORCING
 
 binlog_format=ROW
 default_storage_engine=InnoDB
 innodb_autoinc_lock_mode=2
 
+!include wsrep.cnf
 
 [mysqld_safe]
-pid-file = /var/run/mysqld/mysqld.pid
+pid-file = {{ pxc_dir }}/mysqld/mysqld.pid
 socket   = {{ pxc_dir }}/mysql/mysql.sock
 nice     = 0
 
