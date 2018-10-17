@@ -1,6 +1,22 @@
 ---
 - hosts: pxc
   tasks:
+  - name: shutdown keepalived
+    systemd:
+      name: keepalived
+      state: stopped
+      enabled: no
+    ignore_errors: yes
+    tags:
+      - keepalived
+
+  - name: remove keepalived
+    yum:
+      name: keepalived
+      state: absent
+    tags:
+      - keepalived
+
   - name: shutdown PXC
     systemd:
       name: mysql
@@ -26,21 +42,4 @@
       - /etc/wsrep.cnf
     tags:
       - clean
-
-  - name: shutdown keepalived
-    systemd:
-     name: keepalived
-     state: stopped
-     enabled: no
-    ignore_errors: yes
-    tags:
-      - keepalived
-
-  - name: remove keepalived
-    yum:
-      name: keepalived
-      state: absent
-    tags:
-      - keepalived
-
 
