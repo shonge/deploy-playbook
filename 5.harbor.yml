@@ -49,3 +49,49 @@
     shell: ./install.sh --with-clair
     args:
       chdir: '{{ cpath }}/harbor'
+
+  - name: install haproxy
+    yum:
+      name: haproxy
+      state: present
+    tags:
+      - haproxy
+
+  - name: config haproxy
+    template:
+      src: templates/haproxy.cfg.j2
+      dest: /etc/haproxy/haproxy.cfg
+    tags:
+      - haproxy
+      - haproxy_conf
+
+  - name: enable haproxy
+    systemd:
+      name: haproxy
+      state: started
+      enabled: yes
+    tags:
+      - haproxy
+
+  - name: install keepalived
+    yum:
+      name: keepalived
+      state: present
+    tags:
+      - keepalived
+
+  - name: config keepalived
+    template:
+      src: templates/keepalived.conf.j2
+      dest: /etc/keepalived/keepalived.conf
+    tags:
+      - keepalived
+
+  - name: enable keepalived
+    systemd:
+      name: keepalived
+      state: started
+      enabled: yes
+    tags:
+      - keepalived
+
