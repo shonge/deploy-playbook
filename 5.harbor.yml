@@ -46,6 +46,6 @@
     - { src: 'templates/docker-compose.yml.j2', dest: '{{ cpath }}/harbor/docker-compose.yml' }
 
   - name: launch registry
-    shell: ./install.sh
+    shell: ./install.sh --with-clair
     args:
       chdir: '{{ cpath }}/harbor'
