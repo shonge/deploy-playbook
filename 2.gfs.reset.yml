@@ -21,11 +21,13 @@
     gluster_volume:
       state: stopped
       name: gv0
+    ignore_errors: yes
 
   - name: remove gluster volume
     gluster_volume:
       state: absent
       name: gv0
+    ignore_errors: yes
 
   - name: shutdown glusterd
     systemd:

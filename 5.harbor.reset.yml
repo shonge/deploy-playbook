@@ -48,8 +48,8 @@
       path: '{{ item }}'
       state: absent
     with_items:
-    - {{ hapath }}/*
-    - {{ cpath  }}/harbor
+    - "{{ hapath }}/*"
+    - "{{ cpath  }}/harbor"
 
   - name: Ensure Gluster volume is mounted.
     mount:
