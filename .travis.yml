@@ -4,6 +4,7 @@ services:
   - docker
 
 script:
+- sh init.sh
 - docker build -t shonge/playbook:$TRAVIS_BRANCH .
 - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 - docker push shonge/playbook:$TRAVIS_BRANCH
