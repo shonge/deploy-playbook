@@ -8,4 +8,6 @@ RUN yum clean all && \
 
 ADD HAharbor-playbook /workspace
 
+WORKDIR /workspace
+
 CMD sh -c 'while true;do sleep 1;done'
