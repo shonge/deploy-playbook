@@ -7,3 +7,5 @@ RUN yum clean all && \
     yum -y install ansible
 
 ADD HAharbor-playbook /workspace
+
+CMD sh -c 'while true;do sleep 1;done'
