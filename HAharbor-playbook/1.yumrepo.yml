@@ -14,9 +14,8 @@
       dest: /etc/yum.repos.d/harbor.repo
 
   - name: make yum cache
-    shell: |
-     yum clean all
-     yum makecache
+    yum: 
+      update_cache: true
 
   - name: disabled selinux
     selinux:
