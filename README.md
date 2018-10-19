@@ -5,7 +5,9 @@
 **Before_install:  
 需要配置部署机对目标机进行SSH免密登录**
 ```
-ssh-copy-id 192.168.93.138
+ssh-copy-id 192.168.93.138  
+ssh-copy-id 192.168.93.143  
+...
 ```
 1. 根据实际请求修改hosts  
 ```
@@ -19,12 +21,12 @@ ssh-copy-id 192.168.93.138
 
 [pxc]
 192.168.92.138 
-192.168.92.143 
-192.168.92.144 
+192.168.92.145 
+192.168.92.146 
 
 [harbor]
-192.168.92.143
-192.168.92.144
+192.168.92.147
+192.168.92.148
 ```
 
 2. 根据实际情况修改group_vars  
@@ -72,9 +74,23 @@ docker-compose up -d
 docker exec -ti deploy-playbook bash
 ```
 5. 执行ansible-playbook
+* install
 ```
 cd /workspace
 ansible-playbook -f 0.test.yml -i hosts
+ansible-playbook -f 1.yumrepo.yml -i hosts
+ansible-playbook -f 2.gfs.yml -i hosts
+ansible-playbook -f 3.pxc.yml -i hosts
+ansible-playbook -f 4.docker.yml -i hosts
+ansible-playbook -f 5.harbor.yml -i hosts
+```
+* remove
+```
+cd /workspace
+ansible-playbook -f 5.harbor.reset.yml -i hosts
+ansible-playbook -f 3.pxc.reset.yml -i hosts
+ansible-playbook -f 2.gfs.reset.yml -i hosts
+...
 ```
 6. 文件说明
 ```
