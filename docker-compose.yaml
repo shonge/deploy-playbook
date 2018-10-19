@@ -11,4 +11,6 @@ services:
     image: shonge/playbook:master
     volumes:
     - /root/.ssh:/root/.ssh
+    - ./hosts:/workspace/hosts
+    - ./group_vars:/workspace/group_vars
     restart: always
