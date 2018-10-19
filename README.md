@@ -76,4 +76,20 @@ docker exec -ti deploy-playbook bash
 cd /workspace
 ansible-playbook -f 0.test.yml -i hosts
 ```
-6. 
+6. 文件说明
+```
+0.test.yml           # 测试ansible到hosts是否通畅
+1.yumrepo.yml        # 安装私有YUM源
+2.gfs.yml            # 安装GlusterFS
+2.gfs.reset.yml      # 卸载GlusterFS
+3.pxc.yml            # 安装PXC
+3.pxc.reset.yml      # 卸载PXC
+4.docker.yml         # 安装Docker
+5.harbor.yml         # 安装Harbor
+5.harbor.reset.yml   # 卸载Harbor
+files                # 离线安装需要用到的文件
+group_vars           # 主机组变量，需根据实际环境修改
+hosts                # 主机文件，需根据实际环境修改
+scripts              # 安装需要的脚本
+templates            # 安装需要的Jinjia2模版文件
+```
