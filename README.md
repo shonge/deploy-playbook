@@ -2,8 +2,12 @@
 
 ![alt](.manual/architecture.png)
 
+preinstall
+需要配置部署机对目标机进行SSH免密登录
+```
+ssh-copy-id 192.168.93.138
+```
 1. 根据实际请求修改hosts  
-
 ```
 [yumrepo]
 192.168.92.139
@@ -23,7 +27,7 @@
 192.168.92.144
 ```
 
-2. 根据实际情况修改group_vars   
+2. 根据实际情况修改group_vars  
 all：  
 ```
 yumrepo: 192.168.92.139 # 指定私有YUM源地址
@@ -62,4 +66,13 @@ keepalived_vip: 192.168.92.142
 3. 启动安装程序
 ```
 docker-compose up -d
+```
+4. 进入容器
+```
+docker exec -ti deploy-playbook bash
+```
+5. 执行ansible-playbook
+```
+cd /workspace
+ansible-playbook -f 0.test.yml -i hosts
 ```
