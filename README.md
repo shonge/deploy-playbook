@@ -2,8 +2,8 @@
 
 ![alt](.manual/architecture.png)
 
-preinstall
-需要配置部署机对目标机进行SSH免密登录
+**Before_install:  
+需要配置部署机对目标机进行SSH免密登录**
 ```
 ssh-copy-id 192.168.93.138
 ```
@@ -76,3 +76,4 @@ docker exec -ti deploy-playbook bash
 cd /workspace
 ansible-playbook -f 0.test.yml -i hosts
 ```
+6. 
