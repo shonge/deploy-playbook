@@ -23,12 +23,12 @@
 192.168.92.144
 ```
 
-2. 根据实际情况修改group_vars  
-all  
+2. 根据实际情况修改group_vars   
+all：  
 ```
 yumrepo: 192.168.92.139 # 指定私有YUM源地址
 ```
-glusterfs  
+glusterfs：  
 ```
 brick_dir: /data/glusterfs/gv0 # GlusterFS Cluster本地brick路径
 keepalived_rid: 10             # Keepalived服务器的路由标识。在一个局域网内，此标识应该唯一   
@@ -37,7 +37,7 @@ keepalived_vrid: 110           # 虚拟路由ID标识，这个标识最好是一
                                # MASTER和BACKUP配置中相同vrrp实例的virtual_router_id必须一致，否则将出现脑裂问题
 keepalived_vip: 192.168.92.140 # 虚IP
 ```
-pxc  
+pxc：  
 ```
 pxc_dir: /data/pxc             # PXC data路径
 pxc_password: abc@12345        # PXC root password
@@ -47,7 +47,7 @@ keepalived_interface: ens32
 keepalived_vrid: 111
 keepalived_vip: 192.168.92.141
 ```
-harbor  
+harbor：  
 ```
 gfs_ip: 192.168.92.140        # 指定mount GlusterFS的IP，即 glusterfs.keepalived_vip
 pxc_ip: 192.168.92.141        # 指定PXC的IP，即 pxc.keepalived_vip
@@ -58,4 +58,8 @@ keepalived_rid: 12
 keepalived_interface: ens32
 keepalived_vrid: 112
 keepalived_vip: 192.168.92.142
+```
+3. 启动安装程序
+```
+docker-compose up -d
 ```
