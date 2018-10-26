@@ -5,6 +5,16 @@
   - version: v1.5.3
   - hapath: /data/harborHA 
   tasks: 
+  - name: install GlusterFS-client
+    yum: 
+      name: glusterfs-client
+      state: present
+      
+  - name: install mysql-client
+    yum:
+      name: mysql
+      state: present
+      
   - name: Ensure Gluster volume is mounted.
     mount:
       path: "{{ hapath }}"
