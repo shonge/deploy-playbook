@@ -42,9 +42,9 @@
 
   - name: load data
     shell: |
-      mysql -uroot -p'{{ pxc_password }}' -e "set global pxc_strict_mode=PERMISSIVE;"
-      mysql -uroot -p'{{ pxc_password }}' < {{ cpath }}/registry.sql
-      mysql -uroot -p'{{ pxc_password }}' -e "set global pxc_strict_mode=ENFORCING;"
+      mysql -uroot -p'{{ pxc_password }}' -h'{{ pxc_ip }}' -e "set global pxc_strict_mode=PERMISSIVE;"
+      mysql -uroot -p'{{ pxc_password }}' -h'{{ pxc_ip }}' < {{ cpath }}/registry.sql
+      mysql -uroot -p'{{ pxc_password }}' -h'{{ pxc_ip }}' -e "set global pxc_strict_mode=ENFORCING;"
     when: inventory_hostname == ansible_play_batch[0]
 
   - name: generation config
